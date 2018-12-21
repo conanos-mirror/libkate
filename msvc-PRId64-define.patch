@@ -1,0 +1,60 @@
+diff -Nur libkate-0.4.1/tools/katalyzer.c libkate-0.4.1-msvc/tools/katalyzer.c
+--- libkate-0.4.1/tools/katalyzer.c	2011-08-21 05:42:10.000000000 -0700
++++ libkate-0.4.1-msvc/tools/katalyzer.c	2018-12-20 19:01:22.278775771 -0800
+@@ -32,7 +32,10 @@
+ #include "kutil.h"
+ #include "kstrings.h"
+ #include "kstats.h"
+-
++#ifdef _MSC_VER
++#define PRId64    "lld"
++#define PRIx64    "llx"
++#endif
+ typedef struct {
+   kate_stream_set kate_streams;
+   int n_streams;
+diff -Nur libkate-0.4.1/tools/katedec.c libkate-0.4.1-msvc/tools/katedec.c
+--- libkate-0.4.1/tools/katedec.c	2011-08-21 05:42:10.000000000 -0700
++++ libkate-0.4.1-msvc/tools/katedec.c	2018-12-20 19:01:24.038813620 -0800
+@@ -34,7 +34,10 @@
+ #include "kread.h"
+ #include "kstrings.h"
+ #include "kutil.h"
+-
++#ifdef _MSC_VER
++#define PRId64    "lld"
++#define PRIx64    "llx"
++#endif
+ typedef struct {
+   kate_stream_set kate_streams;
+   int n_streams;
+diff -Nur libkate-0.4.1/tools/kateenc.c libkate-0.4.1-msvc/tools/kateenc.c
+--- libkate-0.4.1/tools/kateenc.c	2011-08-21 05:42:10.000000000 -0700
++++ libkate-0.4.1-msvc/tools/kateenc.c	2018-12-20 19:01:25.658848457 -0800
+@@ -34,7 +34,10 @@
+ #include <ogg/ogg.h>
+ #include "kate/oggkate.h"
+ #include "katedesc.h"
+-
++#ifdef _MSC_VER
++#define PRId64    "lld"
++#define PRIx64    "llx"
++#endif
+ extern int katedesc_parse(void);
+ extern int katedesc_restart(FILE*);
+ extern FILE *katedesc_in;
+diff -Nur libkate-0.4.1/tools/kread.c libkate-0.4.1-msvc/tools/kread.c
+--- libkate-0.4.1/tools/kread.c	2011-08-21 05:42:10.000000000 -0700
++++ libkate-0.4.1-msvc/tools/kread.c	2018-12-20 19:01:28.902918219 -0800
+@@ -39,7 +39,10 @@
+ #include "kstream.h"
+ #include "kutil.h"
+ #include "kread.h"
+-
++#ifdef _MSC_VER
++#define PRId64    "lld"
++#define PRIx64    "llx"
++#endif
+ static int read_raw_packet(FILE *f,char **buffer,ogg_int64_t bytes)
+ {
+   size_t ret;
