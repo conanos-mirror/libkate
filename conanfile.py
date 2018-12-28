@@ -97,6 +97,21 @@ class LibkateConan(ConanFile):
                           src=os.path.join(self.source_folder,self._source_subfolder,output_rpath),
                           excludes=["%s.tlog"%(exe)])
             
+            tools.mkdir(os.path.join(self.package_folder,"lib","pkgconfig"))
+
+            replacements = {
+                "@prefix@"          : self.package_folder,
+                "@exec_prefix@"     : "${prefix}/lib",
+                "@libdir@"          : "${prefix}/lib",
+                "@includedir@"      : "${prefix}/include",
+                "@VERSION@"         : self.version,
+            }
+            for pc in ["kate.pc.in","oggkate.pc.in"]:
+                shutil.copy(os.path.join(self.build_folder,self._source_subfolder,"misc","pkgconfig",pc),
+                            os.path.join(self.package_folder,"lib","pkgconfig",pc))
+                for s, r in replacements.items():
+                    tools.replace_in_file(os.path.join(self.package_folder,"lib","pkgconfig",pc),s,r)
+            
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
